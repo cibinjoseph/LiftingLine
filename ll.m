@@ -2,7 +2,7 @@
 clc; clear;
 
 % Parameters
-span = 8;
+span = 6;
 chord = 1;
 ns = 24;
 theta = 5*(pi/180);
