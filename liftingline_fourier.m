@@ -7,7 +7,7 @@ nFourier = ns;
 Vinf = 10;
 CLslope = 2*pi;
 theta = 5*(pi/180);
-span = 8;
+span = 6;
 chordMax = 1;
 semiSpan = span/2;
 rho = 1.2;
@@ -63,11 +63,29 @@ cl_local = CLslope*(theta - alfaind);
 % Theoretical
 liftNonDimTheoretical = getLiftNonDimTheoretical(AR,CLslope,semiSpan,y);
 
-plot(y,lift_nondim,'bo')
-hold on;
-plot(y,liftNonDimTheoretical,'r-')
-grid on;
-legend('numerical - Fourier','Prandtl')
-title(['Aspect ratio   ' num2str(AR)])
-xlabel('spanwise stations')
-ylabel('Non-dim lift')
+plotOpt = 3;
+switch plotOpt
+  case 1
+    plot(y,lift_nondim,'bo')
+    hold on;
+    plot(y,liftNonDimTheoretical,'r-')
+    grid on;
+    legend('numerical - Fourier','Prandtl')
+    title(['Aspect ratio   ' num2str(AR)])
+    xlabel('spanwise stations')
+    ylabel('Non-dim lift')
+    
+  case 2
+    plot(y,gam);
+    title(['Aspect ratio   ' num2str(AR)])
+    xlabel('spanwise stations')
+    ylabel('gam')
+    grid on
+    
+  case 3
+    plot(y,Vi);
+    title(['Aspect ratio   ' num2str(AR)])
+    xlabel('spanwise stations')
+    ylabel('gam')
+    grid on
+end
