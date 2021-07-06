@@ -47,11 +47,11 @@ ncap = [sin(theta); 0; cos(theta)];
 % AIC
 AIC = zeros(ns, ns);
 for is = 1:ns % panel
-    cA(2) = cB(2, is);
-    cD(2) = cC(2, is);
-    for icp = 1:ns % cp
-        AIC(is, icp) = dot(hshoe(cp(:, icp), cA, cB(:, is), cC(:, is), cD, 1), ncap);
-    end
+  cA(2) = cB(2, is);
+  cD(2) = cC(2, is);
+  for icp = 1:ns % cp
+    AIC(is, icp) = dot(hshoe(cp(:, icp), cA, cB(:, is), cC(:, is), cD, 1), ncap);
+  end
 end
 RHS = ones(ns, 1) * dot(- Vinf, ncap);
 gam = AIC \ RHS;
@@ -59,15 +59,15 @@ gam = AIC \ RHS;
 % Calculate induced velocity
 indVel = zeros(1, ns);
 for is = 1:ns
-    for ipanel = 1:ns
-        cA(2) = cB(2, ipanel);
-        cD(2) = cC(2, ipanel);
-        indVel(is) = indVel(is) + dot(vortxl(indVelcp(:, is), cA, cB(:, ipanel), gam(ipanel)), [0; 0; 1]);
-        indVel(is) = indVel(is) + dot(vortxl(indVelcp(:, is), cC(:, ipanel), cD, gam(ipanel)), [0; 0; 1]);
-        if (is ~= ipanel)
-            indVel(is) = indVel(is) + dot(vortxl(indVelcp(:, is), cB(:, ipanel), cC(:, ipanel), gam(ipanel)), [0; 0; 1]);
-        end
+  for ipanel = 1:ns
+    cA(2) = cB(2, ipanel);
+    cD(2) = cC(2, ipanel);
+    indVel(is) = indVel(is) + dot(vortxl(indVelcp(:, is), cA, cB(:, ipanel), gam(ipanel)), [0; 0; 1]);
+    indVel(is) = indVel(is) + dot(vortxl(indVelcp(:, is), cC(:, ipanel), cD, gam(ipanel)), [0; 0; 1]);
+    if (is ~= ipanel)
+      indVel(is) = indVel(is) + dot(vortxl(indVelcp(:, is), cB(:, ipanel), cC(:, ipanel), gam(ipanel)), [0; 0; 1]);
     end
+  end
 end
 
 % Lift from gam
@@ -89,27 +89,27 @@ liftNonDimTheoretical = getLiftNonDimTheoretical(AR, CLslope, semiSpan, y);
 
 plotOpt = 3;
 switch plotOpt
-    case 1
-        plot(y, lift_nondim_gam, 'bo');
-        hold on;
-        plot(y, liftNonDimTheoretical, 'r-');
-        grid on
-        legend('numerical - Hshoe', 'Prandtl')
-        title(['Aspect ratio   ' num2str(AR)])
-        xlabel('spanwise stations')
-        ylabel('Non-dim lift')
-     
-    case 2
-        plot(y, gam, 'bo');
-        grid on
-        title(['Aspect ratio   ' num2str(AR)])
-        xlabel('spanwise stations')
-        ylabel('Gam')
-     
-    case 3
-        plot(y, abs(indVel))
-        grid on
-        title(['Aspect ratio   ' num2str(AR)])
-        xlabel('spanwise stations')
-        ylabel('Vi')
+  case 1
+    plot(y, lift_nondim_gam, 'bo');
+    hold on;
+    plot(y, liftNonDimTheoretical, 'r-');
+    grid on
+    legend('numerical - Hshoe', 'Prandtl')
+    title(['Aspect ratio   ' num2str(AR)])
+    xlabel('spanwise stations')
+    ylabel('Non-dim lift')
+
+  case 2
+    plot(y, gam, 'bo');
+    grid on
+    title(['Aspect ratio   ' num2str(AR)])
+    xlabel('spanwise stations')
+    ylabel('Gam')
+
+  case 3
+    plot(y, abs(indVel))
+    grid on
+    title(['Aspect ratio   ' num2str(AR)])
+    xlabel('spanwise stations')
+    ylabel('Vi')
 end
